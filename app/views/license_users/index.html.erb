@@ -1,0 +1,145 @@
+<div class="license-container">
+  <div class="license-header">
+    <div class="flex justify-between items-center">
+      <h1>
+        <svg class="w-8 h-8 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+        </svg>
+        License Management
+      </h1>
+    </div>
+  </div>
+
+  <div class="license-stats">
+    <div class="stat-card">
+      <h3>
+        <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+        Total Users
+      </h3>
+      <p><%= @license_users.count %></p>
+    </div>
+    <div class="stat-card">
+      <h3>
+        <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M13 12a1 1 0 11-2 0 1 1 0 012 0z"></path>
+        </svg>
+        Connected Users
+      </h3>
+      <p><%= @license_users.where(is_connected: true).count %></p>
+    </div>
+    <div class="stat-card">
+      <h3>
+        <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+        </svg>
+        Total Modules
+      </h3>
+      <p><%= LicenseModule.count %></p>
+    </div>
+  </div>
+
+  <div class="search-form">
+    <%= form_tag license_users_path, method: :get do %>
+      <div class="search-input-container">
+        <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <%= text_field_tag :search, params[:search], class: 'search-input', placeholder: 'Search users by name...' %>
+      </div>
+      <%= button_tag type: 'submit', class: 'search-button' do %>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        Search Users
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="filters">
+    <div class="relative">
+      <svg class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+      </svg>
+      <%= select_tag :module_type,
+        options_for_select(LicenseModule.distinct.pluck(:key_type), params[:module_type]),
+        prompt: "Filter by Module Type",
+        class: 'filter-select pl-10',
+        data: { controller: 'filter', action: 'change->filter#submit' } %>
+    </div>
+    
+    <div class="relative">
+      <svg class="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M13 12a1 1 0 11-2 0 1 1 0 012 0z"></path>
+      </svg>
+      <%= select_tag :connection_status,
+        options_for_select([['Connected', true], ['Disconnected', false]], params[:connection_status]),
+        prompt: "Filter by Status",
+        class: 'filter-select pl-10',
+        data: { controller: 'filter', action: 'change->filter#submit' } %>
+    </div>
+  </div>
+
+  <table class="license-table">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Status</th>
+        <th>Modules</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @license_users.each do |user| %>
+        <tr>
+          <td class="font-medium"><%= user.user_name %></td>
+          <td>
+            <span class="status-badge <%= user.is_connected ? 'connected' : 'disconnected' %>">
+              <%= user.is_connected ? 'Connected' : 'Disconnected' %>
+            </span>
+          </td>
+          <td>
+            <ul class="module-list">
+              <% user.license_modules.each do |mod| %>
+                <li class="module-item" title="<%= mod.key_desc %>">
+                  <%= mod.key_type %>
+                </li>
+              <% end %>
+            </ul>
+          </td>
+          <td>
+            <%= link_to license_user_path(user), class: 'action-button button-secondary' do %>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+              </svg>
+              View
+            <% end %>
+            
+            <%= link_to edit_license_user_path(user), class: 'action-button button-primary' do %>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+              </svg>
+              Edit
+            <% end %>
+            
+            <%= button_to license_user_path(user), 
+                method: :delete, 
+                class: 'action-button button-danger',
+                data: { confirm: 'Are you sure?' } do %>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              </svg>
+              Delete
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <%= paginate @license_users %>
+  </div>
+</div> 

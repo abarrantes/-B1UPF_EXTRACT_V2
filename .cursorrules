@@ -1,0 +1,133 @@
+# Application Framework
+framework:
+  name: Ruby on Rails
+  version: 8.0.1
+  modern_defaults: true
+  browser_requirements: modern_only
+
+# Core Dependencies
+dependencies:
+  asset_pipeline: propshaft
+  database: sqlite3
+  frontend:
+    - importmap-rails
+    - turbo-rails
+    - stimulus-rails
+    - tailwindcss-rails
+  production_infrastructure:
+    - solid_cache    # Durable caching backend
+    - solid_queue    # Background job processing
+    - solid_cable    # Action Cable backend
+    
+# Development & Testing
+development:
+  security_scanning: brakeman
+  style_guide: rubocop-rails-omakase
+  test_framework:
+    system_tests: selenium_chrome_headless
+    parallel_testing: true
+  dev_server:
+    - foreman (Procfile.dev)
+    - tailwind watcher
+    
+# Deployment & Infrastructure
+deployment:
+  containerization: Docker
+  orchestration: Kamal
+  asset_optimization: Thruster
+  ssl: enabled
+  ci_cd:
+    provider: GitHub Actions
+    checks:
+      - security_scan
+      - js_dependencies
+      - linting
+      - tests
+
+# Application Features
+features:
+  pwa_support:
+    status: configured_not_enabled
+    files:
+      - manifest.json.erb
+      - service_worker support
+  asset_handling:
+    pipeline: propshaft
+    css: tailwind
+  background_processing:
+    adapter: solid_queue
+    configuration: queue.yml
+  caching:
+    store: solid_cache
+    configuration: cache.yml
+
+# Project Structure
+structure:
+  conventions: standard_rails
+  custom_code: minimal
+  views:
+    layouts:
+      - application.html.erb
+      - mailer.html.erb
+      - mailer.text.erb
+    error_pages:
+      - 404.html
+      - 422.html
+      - 500.html
+      - 406-unsupported-browser.html
+
+# Database Configuration
+database:
+  development: sqlite3
+  test: sqlite3
+  production:
+    primary: sqlite3
+    cache: sqlite3
+    queue: sqlite3
+    cable: sqlite3
+
+# Environment-Specific Settings
+environments:
+  production:
+    force_ssl: true
+    log_level: info
+    healthcheck_path: /up
+    asset_host: configured
+    cache_store: solid_cache_store
+    job_adapter: solid_queue
+
+# Security
+security:
+  csrf_protection: enabled
+  content_security_policy: configurable
+  ssl_enforcement: production
+  parameter_filtering:
+    - passw
+    - email
+    - secret
+    - token
+    - _key
+    - crypt
+    - salt
+    - certificate
+    - otp
+    - ssn
+    - cvv
+    - cvc
+
+# File Organization
+file_structure:
+  assets:
+    stylesheets:
+      - application.css
+      - application.tailwind.css
+    javascript:
+      - application.js
+      - controllers/
+  config:
+    environments:
+      - development.rb
+      - test.rb
+      - production.rb
+    initializers: standard_set
+    locales: en.yml 

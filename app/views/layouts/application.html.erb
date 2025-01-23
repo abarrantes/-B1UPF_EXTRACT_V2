@@ -24,6 +24,22 @@
   </head>
 
   <body>
+    <nav class="bg-gray-800 fixed w-full top-0">
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <span class="text-white font-bold">B1upf Extract</span>
+            </div>
+            <div class="ml-10 flex items-baseline space-x-4">
+              <%= link_to "XML Documents", root_path, class: "text-gray-300 hover:text-white px-3 py-2 rounded-md #{current_page?(root_path) ? 'bg-gray-900' : ''}" %>
+              <%= link_to "License Users", license_users_path, class: "text-gray-300 hover:text-white px-3 py-2 rounded-md #{current_page?(license_users_path) ? 'bg-gray-900' : ''}" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
     </main>

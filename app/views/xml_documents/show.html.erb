@@ -1,0 +1,36 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold text-gray-900">
+        XML Document: <%= @xml_document.filename %>
+      </h1>
+      
+      <%= button_to parse_users_xml_document_path(@xml_document), 
+          method: :post,
+          class: 'action-button button-primary' do %>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+        </svg>
+        Parse XML Users
+      <% end %>
+    </div>
+
+    <div class="mt-4">
+      <h2 class="text-lg font-semibold mb-2">File Details</h2>
+      <dl class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Filename</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @xml_document.filename %></dd>
+        </div>
+        <div>
+          <dt class="text-sm font-medium text-gray-500">Upload Date</dt>
+          <dd class="mt-1 text-sm text-gray-900"><%= @xml_document.created_at.strftime("%B %d, %Y") %></dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="mt-6">
+      <%= link_to 'Back to Documents', xml_documents_path, class: 'text-indigo-600 hover:text-indigo-900' %>
+    </div>
+  </div>
+</div> 
